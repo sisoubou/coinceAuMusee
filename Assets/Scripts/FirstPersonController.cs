@@ -40,7 +40,7 @@ public class FirstPersonController : MonoBehaviour
 
     void Move()
     {
-        Debug.Log($"H={Input.GetAxisRaw("Horizontal")} V={Input.GetAxisRaw("Vertical")}");        float x = Input.GetAxisRaw("Horizontal");
+        float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
         Vector3 move = (transform.right * x + transform.forward * z).normalized;
