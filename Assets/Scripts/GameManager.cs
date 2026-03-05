@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI texteProgression;
     public TextMeshProUGUI texteVictoire;
 
+    [Header("Éléments du niveau")]
+    public ExitDoor porteDuMusee;
+
     void Awake()
     {
         if (instance == null) instance = this;
@@ -52,5 +55,12 @@ public class GameManager : MonoBehaviour
             texteVictoire.gameObject.SetActive(true);
             texteVictoire.text = "MUSÉE SAUVÉ !\nLa porte est ouverte.";
         }
+
+        if (porteDuMusee != null)
+        {
+            porteDuMusee.OuvrirPorte();
+        }
     }
+
+    
 }
