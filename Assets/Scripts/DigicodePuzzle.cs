@@ -8,6 +8,7 @@ public class DigicodePuzzle : MonoBehaviour
     private string codeSaisi = "";
 
     public PlayerInteraction playerInteraction;
+    public GameObject oeuvre3D;
 
     public void AjouterChiffre(string chiffre)
     {
@@ -23,13 +24,17 @@ public class DigicodePuzzle : MonoBehaviour
         }
     }
 
-    void VerifierCode()
+   void VerifierCode()
     {
         if (codeSaisi == codeSecret)
         {
             ecranTexte.text = "RÉPARÉ !";
             ecranTexte.color = Color.green;
-            Invoke("TerminerMiniJeu", 1.5f);
+            
+            GameManager.instance.AjouterOeuvreReparee();
+            oeuvre3D.tag = "Untagged"; 
+
+            Invoke("TerminerMiniJeu", 1.5f); 
         }
         else
         {
