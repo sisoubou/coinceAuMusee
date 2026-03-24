@@ -4,7 +4,7 @@ using TMPro;
 public class DigicodePuzzle : MonoBehaviour
 {
     public TextMeshProUGUI ecranTexte;
-    public string codeSecret = "1430";
+    public string codeSecret = "1842";
     private string codeSaisi = "";
 
     public PlayerInteraction playerInteraction;

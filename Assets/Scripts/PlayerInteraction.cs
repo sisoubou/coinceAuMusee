@@ -6,13 +6,13 @@ public class PlayerInteraction : MonoBehaviour
     [Header("Références")]
     public Camera mainCamera;
     public TextMeshProUGUI interactionText; 
-    public GameObject miniGameCanvas;
-    public FirstPersonController fpsController;
+    public FirstPersonController fpsController; 
     
     [Header("Paramètres")]
     public float interactionDistance = 3f;
 
     private bool isPlayingMiniGame = false;
+    private GameObject canvasActif;
 
     void Update()
     {
@@ -31,17 +31,27 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    OuvrirMiniJeu();
+                    PuzzleTrigger trigger = hit.collider.GetComponent<PuzzleTrigger>();
+                    if (trigger != null)
+                    {
+                        OuvrirMiniJeu(trigger.canvasDuPuzzle);
+                    }
+                    else 
+                    {
+                        Debug.LogWarning("Il manque le script PuzzleTrigger sur cet objet !");
+                    }
                 }
             }
         }
     }
 
-    public void OuvrirMiniJeu()
+    public void OuvrirMiniJeu(GameObject canvasAcheminer)
     {
         isPlayingMiniGame = true;
-        interactionText.gameObject.SetActive(false);
-        miniGameCanvas.SetActive(true);
+        if (interactionText != null) interactionText.gameObject.SetActive(false); 
+        
+        canvasActif = canvasAcheminer;
+        canvasActif.SetActive(true); 
 
         fpsController.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -51,7 +61,7 @@ public class PlayerInteraction : MonoBehaviour
     public void FermerMiniJeu()
     {
         isPlayingMiniGame = false;
-        miniGameCanvas.SetActive(false);
+        if (canvasActif != null) canvasActif.SetActive(false); 
 
         fpsController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
