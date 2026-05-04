@@ -31,14 +31,32 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    // Le joueur cherche maintenant DEUX choses possibles :
                     PuzzleTrigger trigger = hit.collider.GetComponent<PuzzleTrigger>();
+                    ItemRamassable item = hit.collider.GetComponent<ItemRamassable>();
+
+                    // 1. Est-ce un puzzle ?
                     if (trigger != null)
                     {
-                        OuvrirMiniJeu(trigger.canvasDuPuzzle);
+                        if (trigger.necessiteTournevis && !GameManager.instance.aTournevis)
+                        {
+                            Debug.Log("Il me faut un tournevis pour ouvrir ce boîtier...");
+                            if (interactionText != null) interactionText.text = "Il me faut un tournevis !";
+                        }
+                        else
+                        {
+                            OuvrirMiniJeu(trigger.canvasDuPuzzle);
+                        }
                     }
+                    // 2. Est-ce un objet à ramasser (comme le tournevis) ?
+                    else if (item != null)
+                    {
+                        item.Ramasser();
+                    }
+                    // 3. Sinon, erreur.
                     else 
                     {
-                        Debug.LogWarning("Il manque le script PuzzleTrigger sur cet objet !");
+                        Debug.LogWarning("Il manque un script (PuzzleTrigger ou ItemRamassable) sur cet objet !");
                     }
                 }
             }
